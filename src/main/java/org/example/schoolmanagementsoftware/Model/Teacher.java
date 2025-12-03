@@ -41,5 +41,6 @@ public class Teacher {
     private Double salary;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "teacher")
+    @PrimaryKeyJoinColumn
     private Address address;
 }
