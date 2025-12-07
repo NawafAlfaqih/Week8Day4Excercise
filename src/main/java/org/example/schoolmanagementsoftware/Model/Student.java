@@ -2,7 +2,6 @@ package org.example.schoolmanagementsoftware.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,25 +9,23 @@ import lombok.Setter;
 
 import java.util.Set;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @Entity
 @NoArgsConstructor
-public class Course {
+public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer ID;
 
-    @NotBlank(message = "name cannot be empty")
+
     private String name;
+    private Integer age;
+    private String major;
 
-    @ManyToOne
+    @ManyToMany
     @JsonIgnore
-    private Teacher teacher;
-
-    @ManyToMany(mappedBy = "courses",
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Set<Student> students;
+    private Set<Course> courses;
 }

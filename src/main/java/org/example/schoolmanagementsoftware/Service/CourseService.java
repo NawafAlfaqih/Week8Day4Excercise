@@ -3,7 +3,9 @@ package org.example.schoolmanagementsoftware.Service;
 import lombok.RequiredArgsConstructor;
 import org.example.schoolmanagementsoftware.Api.ApiException;
 import org.example.schoolmanagementsoftware.DTO.CourseDTO;
+import org.example.schoolmanagementsoftware.DTO.StudentDTO;
 import org.example.schoolmanagementsoftware.Model.Course;
+import org.example.schoolmanagementsoftware.Model.Student;
 import org.example.schoolmanagementsoftware.Model.Teacher;
 import org.example.schoolmanagementsoftware.Repository.CourseRepository;
 import org.example.schoolmanagementsoftware.Repository.TeacherRepository;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -84,6 +87,22 @@ public class CourseService {
 
         return "The Teacher's for course '" +course.getId()+"' is: '"
                 +course.getTeacher().getName()+"'";
+    }
 
+    public List<StudentDTO> getAllStudentsInCourse(Integer courseId) {
+        Course course = courseRepository.findCourseById(courseId);
+        if (course == null)
+            throw new ApiException("Course was not found");
+
+        Set<Student> students = course.getStudents();
+        ArrayList<StudentDTO> dtoArrayList = new ArrayList<>();
+
+        for (Student s: students) {
+            StudentDTO dto = new StudentDTO(
+                    s.getName(), s.getAge(), s.getMajor()
+            );
+            dtoArrayList.add(dto);
+        }
+        return dtoArrayList;
     }
 }

@@ -55,4 +55,11 @@ public class CourseController {
         return ResponseEntity.status(200)
                 .body(new ApiResponse(courseService.getTeacherNameOfCourse(courseID)));
     }
+
+    @GetMapping("/get/students/course-id/{courseID}")
+    public ResponseEntity<?> getAllStudentsInCourse(@PathVariable Integer courseID) {
+        return ResponseEntity.status(200)
+                .body(courseService.getAllStudentsInCourse(courseID));
+    }
+
 }
